@@ -12,17 +12,6 @@ namespace Bingo.ViewModel
         public delegate void IsNBingoEventHandelr();
         public event IsNBingoEventHandelr OnIsBingo;
 
-        #region BingoCase Test
-        private bool BingoCaseOne = false;
-        private bool BingoCaseTwo = false;
-        private bool BingoCaseThree = false;
-        private bool BingoCaseFour = false;
-        private bool BingoCaseFive = false;
-        private bool BingoCaseSix = false;
-        private bool BingoCaseSeven = false;
-        private bool BingoCaseEight = false;
-        #endregion
-
         #region Properties
         private ObservableCollection<BingoModel> _bingoItems;
         public ObservableCollection<BingoModel> BingoItems
