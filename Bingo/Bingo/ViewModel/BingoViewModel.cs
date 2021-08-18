@@ -91,10 +91,15 @@ namespace Bingo.ViewModel
 
         private void SetBingoItems()
         {
-            for(int i = 1; i <= 9; i++)
-            {
-                BingoItems.Add(new BingoModel { BingoIdx = i, IsSelected = false });
-            }
+            BingoItems.Add(new BingoModel { BingoContent = "내 책상에는 항상 카페인 음료가 있다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "주변 사람들로부터 컴퓨터 관련된 질문을 받아본 적있다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "영타 400타 이상이다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "노트북에 스티커가 붙어 있다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "어? 라는 말을 많이 한다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "기계식 키보드를 갖고 있다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "할 줄 아는 언어가 3개 이상이다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "허리가 좋지 않다", IsSelected = false });
+            BingoItems.Add(new BingoModel { BingoContent = "개발과 게임, 둘 중 선택하라 하면 개발이다", IsSelected = false });
         }
 
         private void SetBingoCaseItems()

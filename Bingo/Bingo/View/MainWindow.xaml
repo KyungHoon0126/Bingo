@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converter="clr-namespace:Bingo.Converters"
         mc:Ignorable="d"
-        Title="Bingo" Height="450" Width="800"
+        Title="Bingo" 
+        Height="750" Width="800"
+        ResizeMode="NoResize"
+        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
@@ -13,16 +16,32 @@
         <converter:IsSelectedToBackgroundConverter x:Key="IsSelectedToBackgroundConverter"/>
         <converter:IsSelectedToFocusableConverter x:Key="IsSelectedToFocusableConverter"/>
 
-        <Style TargetType="{x:Type Border}" x:Key="SQUARE">
-            <Setter Property="Margin" Value="0.5"/>
-            <Setter Property="UseLayoutRounding" Value="True"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Style TargetType="{x:Type TextBlock}" x:Key="BINGO_TITLE">
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#17224f"/>
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
         </Style>
 
         <Style TargetType="{x:Type TextBlock}" x:Key="BINGO_ITEM">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="FontFamily" Value="휴먼 둥근 헤드라인"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" x:Key="INPUT_BINGO">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontFamily" Value="휴먼 둥근 헤드라인"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="20"/>
         </Style>
     </Window.Resources>
     
@@ -32,17 +51,28 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0"
-                    HorizontalAlignment="Center">
-            <TextBlock Text="N 빙고를 입력해 주세요 : "
-                       Margin="5"
-                       FontSize="15"/>
-            <TextBox Text="{Binding InputBingoCount}"
-                     Margin="5"
-                     FontSize="15"/>
+        <StackPanel Grid.Row="0" 
+                    Margin="0,50,0,0">
+            <Border Width="200" Height="50" Background="#ec3842" CornerRadius="25">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="2021 BBROS : "
+                               Style="{StaticResource BINGO_ITEM}"
+                               FontSize="20"
+                               Foreground="White"
+                               FontWeight="Regular"/>
+                   
+                    <TextBox Text="{Binding InputBingoCount}"
+                             Style="{StaticResource ResourceKey=INPUT_BINGO}"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="개발자 빙고판"
+                       Style="{StaticResource BINGO_TITLE}"/>
         </StackPanel>
 
-        <ListView x:Name="lvBingoItems" Grid.Row="1"
+        <ListView x:Name="lvBingoItems" 
+                  Grid.Row="1" 
                   ItemsSource="{Binding BingoItems}"
                   SelectedItem="{Binding SelectedBingo}"
                   HorizontalContentAlignment="Center">
@@ -57,8 +87,9 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Focusable" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToFocusableConverter}}"/>
-                    <Setter Property="Background" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>
-                    <Style.Triggers>    
+                    <!--<Setter Property="Background" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>-->
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="Transparent"/>
                             <Setter Property="BorderThickness" Value="0"/>
@@ -69,12 +100,11 @@
             
             <ListView.Template>
                 <ControlTemplate TargetType="{x:Type ListView}">
-                    <Border BorderThickness="0,0,0,0">
+                    <Border>
                         <Grid>
                             <UniformGrid Columns="3" Rows="3">
-                                <Border Style="{StaticResource SQUARE}"/>
+                                <Border />
                             </UniformGrid>
-
                             <ItemsPresenter/>
                         </Grid>
                     </Border>
@@ -83,14 +113,17 @@
             
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding BingoIdx}"
-                               Style="{StaticResource BINGO_ITEM}"/>
+                    <Grid>
+                        <TextBlock Text="{Binding BingoContent}"
+                                   Style="{StaticResource BINGO_ITEM}"/>
+                        <Image Source="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" Rows="3"/>
+                    <UniformGrid Columns="3" Rows="3" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>

@@ -2,13 +2,13 @@
 {
     public class BingoModel : ObservableObject
     {
-        private int _bingoIdx;
-        public int BingoIdx
+        private string _bingoContent;
+        public string BingoContent
         {
-            get => _bingoIdx;
+            get => _bingoContent;
             set
             {
-                _bingoIdx = value;
+                _bingoContent = value;
                 OnPropertyChanged();
             }
         }

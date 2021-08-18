@@ -1,8 +1,6 @@
-﻿using Bingo.Utils;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace Bingo.Converters
 {
@@ -10,7 +8,8 @@ namespace Bingo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((bool)value) ? Util.GetHexToRgbColor("#262626") : Brushes.White;
+            //return ((bool)value) ? Util.GetHexToRgbColor("#262626") : Brushes.White;
+            return ((bool)value) ? @"/Assets/Circle.png" : "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
