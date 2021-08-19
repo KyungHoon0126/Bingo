@@ -13,35 +13,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <Window.Resources>
+        <!--Conveters-->
         <converter:IsSelectedToBackgroundConverter x:Key="IsSelectedToBackgroundConverter"/>
         <converter:IsSelectedToFocusableConverter x:Key="IsSelectedToFocusableConverter"/>
-
-        <Style TargetType="{x:Type TextBlock}" x:Key="BINGO_TITLE">
-            <Setter Property="FontSize" Value="50"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#17224f"/>
-            <Setter Property="FontFamily" Value="Bahnschrift"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,20,0,0"/>
-        </Style>
-
-        <Style TargetType="{x:Type TextBlock}" x:Key="BINGO_ITEM">
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="FontFamily" Value="AppleSDGothicNeoT00"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-        </Style>
-
-        <Style TargetType="{x:Type TextBox}" x:Key="INPUT_BINGO">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontFamily" Value="휴먼 둥근 헤드라인"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
     </Window.Resources>
     
     <Grid>
@@ -62,35 +36,21 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <StackPanel
-                    Margin="0,50,0,0">
-                    <Border Width="200" Height="50" Background="#ec3842" CornerRadius="25">
-                        <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-                            <TextBlock Text="2021 BBROS : "
-                               Style="{StaticResource BINGO_ITEM}"
-                               FontSize="20"
-                               Foreground="White"
-                               FontFamily="휴먼 둥근 헤드라인"
-                               FontWeight="Regular"/>
-
-                            <TextBox Text="{Binding InputBingoCount}"
-                             Style="{StaticResource ResourceKey=INPUT_BINGO}"/>
+                <StackPanel Margin="0,50,0,0">
+                    <Border Style="{StaticResource BINGO_SUB_TITLE_BORDER}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Style="{StaticResource BINGO_SUB_TITLE}"/>
+                            <TextBox Style="{StaticResource INPUT_BINGO}"
+                                     Text="{Binding InputBingoCount}"/>
                         </StackPanel>
                     </Border>
-
-                    <TextBlock Text="개발자 빙고판"
-                       Style="{StaticResource BINGO_TITLE}"/>
+                    <TextBlock Style="{StaticResource BINGO_TITLE}"/>
                 </StackPanel>
             </Grid>
 
             <Grid Grid.Column="2">
                 <Button Margin="0,30,0,0"
-                        FocusVisualStyle="{x:Null}"
-                        HorizontalAlignment="Center"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Height="30" Width="30"
+                        Style="{StaticResource SHUFFLE_BUTTON}"
                         Command="{Binding ShuffleBingoItemsCommand}">
                     <Image Source="/Assets/ShuffleIcon.png"
                            Height="30" Width="30"
@@ -99,8 +59,7 @@
             </Grid>
         </Grid>
 
-        <ListView x:Name="lvBingoItems" 
-                  Grid.Row="1" 
+        <ListView x:Name="lvBingoItems" Grid.Row="1" 
                   ItemsSource="{Binding BingoItems}"
                   SelectedItem="{Binding SelectedBingo}"
                   HorizontalContentAlignment="Center">
@@ -114,8 +73,8 @@
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Focusable" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToFocusableConverter}}"/>
                     <!--<Setter Property="Background" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>-->
+                    <Setter Property="Focusable" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToFocusableConverter}}"/>
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

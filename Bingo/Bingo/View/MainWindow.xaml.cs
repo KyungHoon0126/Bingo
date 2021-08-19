@@ -11,13 +11,11 @@ namespace Bingo
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MainWindow_Loaded;
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.DataContext = App.bingoViewModel;
-            App.bingoViewModel.OnIsBingo += BingoViewModel_OnIsBingo;
+            Loaded += (s, e) =>
+            {
+                this.DataContext = App.bingoViewModel;
+                App.bingoViewModel.OnIsNBingo += BingoViewModel_OnIsBingo;
+            };
         }
 
         private void BingoViewModel_OnIsBingo()
