@@ -7,8 +7,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Theme/Color.xaml"/>
                 <ResourceDictionary Source="/ResourceDictionaries/InputBingo.xaml"/>
                 <ResourceDictionary Source="/ResourceDictionaries/ShuffleButton.xaml"/>
+                <ResourceDictionary Source="/ResourceDictionaries/ExitButton.xaml"/>
                 <ResourceDictionary Source="/ResourceDictionaries/BingoTitle.xaml"/>
                 <ResourceDictionary Source="/ResourceDictionaries/BingoItem.xaml"/>
                 <ResourceDictionary Source="/ResourceDictionaries/BingoSubTitle.xaml"/>

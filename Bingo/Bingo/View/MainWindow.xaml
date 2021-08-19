@@ -21,10 +21,17 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Border Grid.Row="0" MouseMove="Border_MouseMove">
+            <Button x:Name="btnExitButton"
+                    Style="{StaticResource EXIT_BUTTON}"
+                    Click="btnExitButton_Click"/>
+        </Border>
+
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -36,7 +43,7 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <StackPanel Margin="0,50,0,0">
+                <StackPanel>
                     <Border Style="{StaticResource BINGO_SUB_TITLE_BORDER}">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Style="{StaticResource BINGO_SUB_TITLE}"/>
@@ -49,8 +56,7 @@
             </Grid>
 
             <Grid Grid.Column="2">
-                <Button Margin="0,30,0,0"
-                        Style="{StaticResource SHUFFLE_BUTTON}"
+                <Button Style="{StaticResource SHUFFLE_BUTTON}"
                         Command="{Binding ShuffleBingoItemsCommand}">
                     <Image Source="/Assets/ShuffleIcon.png"
                            Height="30" Width="30"
@@ -59,7 +65,7 @@
             </Grid>
         </Grid>
 
-        <ListView x:Name="lvBingoItems" Grid.Row="1" 
+        <ListView x:Name="lvBingoItems" Grid.Row="2" 
                   ItemsSource="{Binding BingoItems}"
                   SelectedItem="{Binding SelectedBingo}"
                   HorizontalContentAlignment="Center">

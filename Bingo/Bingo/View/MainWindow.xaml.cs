@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Bingo
 {
@@ -20,7 +21,25 @@ namespace Bingo
 
         private void BingoViewModel_OnIsBingo()
         {
-            MessageBox.Show("BINGO!!!");
+            App.notifier.ShowNotifyMessage("🎉 Congraturate Bingo 🎉", "😊 !BINGO! ✌");
+            ExitBingoGame();
+        }
+
+        private void Border_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed && sender.Equals(e.OriginalSource))
+            {
+                this.DragMove();
+            }
+        }
+
+        private void btnExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExitBingoGame();
+        }
+
+        private void ExitBingoGame()
+        {
             Environment.Exit(0);
         }
     }
