@@ -9,116 +9,245 @@
         Height="750" Width="800"
         ResizeMode="NoResize"
         WindowStyle="None"
+        AllowsTransparency="True"
+        Background="White" 
         WindowStartupLocation="CenterScreen"
+        xmlns:ctrl="clr-namespace:Bingo.Control"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"/>
+    </WindowChrome.WindowChrome>
+    
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,800,750" RadiusX="25" RadiusY="25"/>
+    </Window.Clip>
 
     <Window.Resources>
         <!--Conveters-->
         <converter:IsSelectedToBackgroundConverter x:Key="IsSelectedToBackgroundConverter"/>
         <converter:IsSelectedToFocusableConverter x:Key="IsSelectedToFocusableConverter"/>
+
+        <!--OpenMenu-->
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="gdMain">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="250"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="gdMain">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="50"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="spMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="250"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!--CloseMenu-->
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="gdMain">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="gdMain">
+                <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="spMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" MouseMove="Border_MouseMove">
-            <Button x:Name="btnExitButton"
-                    Style="{StaticResource EXIT_BUTTON}"
-                    Click="btnExitButton_Click"/>
-        </Border>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpenMenu">
+            <BeginStoryboard x:Name="OpenMenu_BeginStoryboard"
+                             Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnCloseMenu">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" 
+                             Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
 
-            <Grid Grid.Column="0">
-                
+    <Grid Background="{StaticResource FigureBackgroundColor}">
+        <StackPanel x:Name="spMenu" 
+                    RenderTransformOrigin="0.5,0.5"
+                    Margin="-250,0,0,0" 
+                    Width="250" 
+                    HorizontalAlignment="Left">
+            
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+
+            <ListView Background="White" BorderBrush="Transparent" Margin="0,49,0,0">
+                <ListViewItem x:Name="listViewItem" 
+                              RenderTransformOrigin="0.5,0.5"
+                              Height="60">
+                    
+                    <ListViewItem.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ListViewItem.RenderTransform>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Assets/close_logo.png" 
+                               Width="30" Height="30"
+                               VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="EXIT PROGRAM" 
+                                   Margin="10" 
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+
+        <Grid x:Name="gdMain" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5" Background="White">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" MouseMove="Border_MouseMove">
+                <Button x:Name="btnExitButton"
+                        Style="{StaticResource EXIT_BUTTON}"
+                        Click="btnExitButton_Click"/>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Button x:Name="btnCloseMenu"
+                            Style="{StaticResource ANIMATION_MENU_BUTTON}"
+                            Click="btnCloseMenu_Click">
+                        <Image Source="/Assets/menu_logo.png"/>
+                    </Button>
+
+                    <Button x:Name="btnOpenMenu"
+                            Style="{StaticResource ANIMATION_MENU_BUTTON}"
+                            Click="btnOpenMenu_Click">
+                        <Image Source="/Assets/menu_logo.png"/>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <StackPanel>
+                        <Border Style="{StaticResource BINGO_SUB_TITLE_BORDER}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource BINGO_SUB_TITLE}"/>
+                                <TextBox Style="{StaticResource INPUT_BINGO}"
+                                         Text="{Binding InputBingoCount}"/>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Style="{StaticResource BINGO_TITLE}"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Button Style="{StaticResource SHUFFLE_BUTTON}"
+                            Command="{Binding ShuffleBingoItemsCommand}">
+                        <Image Source="/Assets/ShuffleIcon.png"
+                               Height="25" Width="25"
+                               VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
             </Grid>
 
-            <Grid Grid.Column="1">
-                <StackPanel>
-                    <Border Style="{StaticResource BINGO_SUB_TITLE_BORDER}">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Style="{StaticResource BINGO_SUB_TITLE}"/>
-                            <TextBox Style="{StaticResource INPUT_BINGO}"
-                                     Text="{Binding InputBingoCount}"/>
-                        </StackPanel>
-                    </Border>
-                    <TextBlock Style="{StaticResource BINGO_TITLE}"/>
-                </StackPanel>
-            </Grid>
+            <ListView x:Name="lvBingoItems" Grid.Row="2" 
+                      ItemsSource="{Binding BingoItems}"
+                      SelectedItem="{Binding SelectedBingo}"
+                      HorizontalContentAlignment="Center">
 
-            <Grid Grid.Column="2">
-                <Button Style="{StaticResource SHUFFLE_BUTTON}"
-                        Command="{Binding ShuffleBingoItemsCommand}">
-                    <Image Source="/Assets/ShuffleIcon.png"
-                           Height="30" Width="30"
-                           VerticalAlignment="Center"/>
-                </Button>
-            </Grid>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding CanPlayGameCommand}"
+                                               CommandParameter="{Binding ElementName=lvBingoItems, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <!--<Setter Property="Background" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>-->
+                        <Setter Property="Focusable" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToFocusableConverter}}"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.Template>
+                    <ControlTemplate TargetType="{x:Type ListView}">
+                        <Border>
+                            <Grid>
+                                <UniformGrid Columns="3" Rows="3">
+                                    <Border />
+                                </UniformGrid>
+                                <ItemsPresenter/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </ListView.Template>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock Text="{Binding BingoContent}"
+                                       Style="{StaticResource BINGO_ITEM}"/>
+                            <Image Source="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" Rows="3" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
         </Grid>
 
-        <ListView x:Name="lvBingoItems" Grid.Row="2" 
-                  ItemsSource="{Binding BingoItems}"
-                  SelectedItem="{Binding SelectedBingo}"
-                  HorizontalContentAlignment="Center">
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding CanPlayGameCommand}"
-                                           CommandParameter="{Binding ElementName=lvBingoItems, Path=SelectedItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <!--<Setter Property="Background" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>-->
-                    <Setter Property="Focusable" Value="{Binding IsSelected, Converter={StaticResource IsSelectedToFocusableConverter}}"/>
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-            
-            <ListView.Template>
-                <ControlTemplate TargetType="{x:Type ListView}">
-                    <Border>
-                        <Grid>
-                            <UniformGrid Columns="3" Rows="3">
-                                <Border />
-                            </UniformGrid>
-                            <ItemsPresenter/>
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </ListView.Template>
-            
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding BingoContent}"
-                                   Style="{StaticResource BINGO_ITEM}"/>
-                        <Image Source="{Binding IsSelected, Converter={StaticResource IsSelectedToBackgroundConverter}}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" Rows="3" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
+        <ctrl:StartScreenControl x:Name="ctrlStartScreen" Visibility="Visible"/>
     </Grid>
 </Window>

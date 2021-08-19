@@ -15,14 +15,20 @@ namespace Bingo
             Loaded += (s, e) =>
             {
                 this.DataContext = App.bingoViewModel;
+                ctrlStartScreen.OnLoadMainWindow += CtrlStartScreen_OnLoadMainWindow;
                 App.bingoViewModel.OnIsNBingo += BingoViewModel_OnIsBingo;
             };
+        }
+
+        private void CtrlStartScreen_OnLoadMainWindow(object sender, EventArgs e)
+        {
+            ctrlStartScreen.Visibility = Visibility.Collapsed;
+            gdMain.Visibility = Visibility.Visible;
         }
 
         private void BingoViewModel_OnIsBingo()
         {
             App.notifier.ShowNotifyMessage("🎉 Congraturate Bingo 🎉", "😊 !BINGO! ✌");
-            ExitBingoGame();
         }
 
         private void Border_MouseMove(object sender, MouseEventArgs e)
@@ -35,12 +41,19 @@ namespace Bingo
 
         private void btnExitButton_Click(object sender, RoutedEventArgs e)
         {
-            ExitBingoGame();
+            Environment.Exit(0);
         }
 
-        private void ExitBingoGame()
+        private void btnCloseMenu_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            btnOpenMenu.Visibility = Visibility.Visible;
+            btnCloseMenu.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            btnOpenMenu.Visibility = Visibility.Collapsed;
+            btnCloseMenu.Visibility = Visibility.Visible;
         }
     }
 }
